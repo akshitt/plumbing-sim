@@ -9,25 +9,27 @@ class LoginComponent extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      username : ''
+      game_id : ''
     }
+
   }
 
-  usernameChangeHandler = (event) => {
+  gameIdChangeHandler = (event) => {
+    //console.log(window.location.origin.replace(/^http/,'ws')+'/ws/sim')
     this.setState({
-      username: event.target.value
+      game_id: event.target.value
     });
   }
 
   render() {
     return(
       <div className="login">
-        <form onSubmit={(e) => this.props.handleLogin(e, this.state.username)}>
+        <form onSubmit={(e) => this.props.handleLogin(e, this.state.game_id)}>
           <input 
             type="text"
-            onChange = {this.usernameChangeHandler}
-            value = {this.state.username}
-            placeholder = "username"
+            onChange = {this.gameIdChangeHandler}
+            value = {this.state.game_id}
+            placeholder = "Game Id"
             required 
           />
           <button className="submit" type="submit">
@@ -43,7 +45,7 @@ class LoginComponent extends React.Component {
 
 function Block(props){
   return (
-    <button className="square" style={{backgroundColor:props.color}} onClick={props.onClick}>
+    <button className="square" style={{background:props.color}} onClick={props.onClick} onContextMenu={props.onContextMenu}>
     </button>
   )
 }
@@ -51,13 +53,19 @@ function Block(props){
 class Grid extends React.Component{
 
   renderBlock(i,j){
+  	console.log(this.props.grid[i][j])
     let color = Colors[this.props.grid[i][j]]
     return <Block
       x={i}
       y={j}
       color={color}
       onClick={() => this.props.onClick(i,j)}
+      onContextMenu={(e) => this.handleContextMenu(e,i,j)}
     />
+  }
+
+  handleContextMenu = (e,i,j) => {
+    this.props.handleContextMenu(e,i,j)
   }
 
   renderRow(i,n){
@@ -146,11 +154,45 @@ function Reset(props){
   )
 }
 
+class SelectPipe extends React.Component{
+	constructor(props) {
+		super(props)
+		this.state = {
+			selectedOption: 'large'
+		}
+	}
+
+	handleChange = (e) => {
+		this.setState({
+			selectedOption: e.target.value
+		})
+		this.props.handleOptionChange(e);
+		
+	}
+
+	render() {
+		return(
+		<form>
+			<input type="radio" value="small" checked = {this.state.selectedOption=="small"} onChange = {this.handleChange} />
+				0.5 inch
+			
+			<input type="radio" value="medium" checked = {this.state.selectedOption=="medium"} onChange = {this.handleChange} />
+				0.75 inch
+		
+			<input type="radio" value="large" checked = {this.state.selectedOption=="large"} onChange = {this.handleChange} />
+				1 inch
+			
+		</form>
+		)
+	}
+}
+
 class App extends React.Component{
 
   constructor(props) {
     super(props);
-    let size = 10
+    this.handleContextMenu = this.handleContextMenu.bind(this);
+    let size = 15
     let grid = []
     let row = size-1
     let col = 0
@@ -164,8 +206,9 @@ class App extends React.Component{
       grid: grid,
       row: row,
       col: col,
-      username: '',
-      loggedIn: false
+      game_id: '',
+      loggedIn: false,
+      pipe_size: 'large',
     };
    
   }
@@ -186,145 +229,41 @@ class App extends React.Component{
     }
 
   handleDirectionClick(direction) {
-    let row = this.state.row;
-    let col = this.state.col;
-    let size = this.state.size;
-    let grid = this.state.grid;
-    if(direction=="U"){
-      let destRow = row-3;
-      let valid = false;
-      if(destRow>=0){
-        if(grid[row-1][col]=="blank"&&grid[row-2][col]=="blank"&&grid[row-3][col]=="blank"){
-          valid = true;
-        }
-      }
-      if(valid){
-        grid[row][col] = "split";
-        grid[row-1][col] = "pipe";
-        grid[row-2][col] = "pipe";
-        grid[row-3][col] = "active";
-        row = destRow;
-        this.setState({
-          grid:grid,
-          row:row,
-        }) 
-      }
-         
-    }
-    else if(direction=="D"){
-      let destRow = row+3;
-      let valid = false;
-      if(destRow<size){
-        if(grid[row+1][col]=="blank"&&grid[row+2][col]=="blank"&&grid[row+3][col]=="blank"){
-          valid = true;
-        }
-      }
-      if(valid){
-        grid[row][col] = "split";
-        grid[row+1][col] = "pipe";
-        grid[row+2][col] = "pipe";
-        grid[row+3][col] = "active";
-        row = destRow;
-        this.setState({
-          grid:grid,
-          row:row,
-        }) 
-      }
-
-    }
-    else if(direction=="R"){
-      let destCol = col+3;
-      let valid = false;
-      if(destCol<size){
-        if(grid[row][col+1]=="blank"&&grid[row][col+2]=="blank"&&grid[row][col+3]=="blank"){
-          valid = true;
-        }
-      }
-      if(valid){
-        grid[row][col] = "split";
-        grid[row][col+1] = "pipe";
-        grid[row][col+2] = "pipe";
-        grid[row][col+3] = "active";
-        col = destCol;
-        this.setState({
-          grid:grid,
-          col:col,
-        }) 
-      }
-    }
-    else{
-      let destCol = col-3;
-      let valid = false;
-      if(destCol>=0){
-        if(grid[row][col-1]=="blank"&&grid[row][col-2]=="blank"&&grid[row][col-3]=="blank"){
-          valid = true;
-        }
-      }
-      if(valid){
-        grid[row][col] = "split";
-        grid[row][col-1] = "pipe";
-        grid[row][col-2] = "pipe";
-        grid[row][col-3] = "active";
-        col = destCol;
-        this.setState({
-          grid:grid,
-          col:col,
-        }) 
-      }
-
-    }
+    let game_id = this.state.game_id
+    let pipe_size = this.state.pipe_size
+    WebSocketInstance.directionClick(game_id,direction,pipe_size)
   }
 
   handleBlockClick(i,j){
-    let username = this.state.username
-    WebSocketInstance.blockClick(username,i,j)
-    /*let grid = this.state.grid;
-    let row = this.state.row;
-    let col = this.state.col;
-    if(grid[i][j]=="split"){
-      grid[i][j] = "active";
-      grid[row][col] = "split";
-      row = i;
-      col = j;
-      this.setState({
-        grid: grid,
-        row: row,
-        col: col,
-      })
-    }*/
+    let game_id = this.state.game_id
+    WebSocketInstance.blockClick(game_id,i,j)
   }
 
   handleReset(){
     console.log("reset")
-    WebSocketInstance.reset(this.state.username)
-    /*let grid = this.state.grid;
-    let size = this.state.size;
-    let row = size-1;
-    let col = 0;
-    for(let i=0;i<size;i++){
-      for(let j=0;j<size;j++){
-        grid[i][j] = "blank";
-      }
-    }
-    grid[row][col] = "active";
-    this.setState({
-      grid: grid,
-      row: row,
-      col: col,
-    })*/
+    WebSocketInstance.reset(this.state.game_id)
   }
 
-  handleLogin = (e,username) => {
+  handleLogin = (e,game_id) => {
     e.preventDefault();
     this.setState({
-      loggedIn: true,
-      username: username
+      //loggedIn: true,
+      game_id: game_id
     })
+
     WebSocketInstance.connect();
     this.waitForSocketConnection(() => { 
-      WebSocketInstance.initUser(username);
+      WebSocketInstance.initUser(game_id);
       WebSocketInstance.addCallbacks(this.gameUpdate.bind(this))
     });
+  }
+
+  handleOptionChange = (event) => {
+  	//event.preventDefault();
+  	console.log(event.target.value)
+  	this.setState({
+  		pipe_size: event.target.value
+  	})
   }
 
   gameUpdate(parsedData){
@@ -334,12 +273,22 @@ class App extends React.Component{
     const col = parsedData['col']
     const size = parsedData['size']
     this.setState({
+    	loggedIn: true,
       grid: grid,
       row: row,
       col: col
     })
     
   }
+
+  handleContextMenu(e,i,j){
+    const grid = this.state.grid;
+    if(grid[i][j].split("_")[0]=="pipe"){
+      e.preventDefault()
+      console.log(i,j)
+    }
+  }
+
 
   render() {
     const size = this.state.size
@@ -352,13 +301,20 @@ class App extends React.Component{
           size={size}
           grid={grid}
           onClick = {(i,j) => this.handleBlockClick(i,j)}
+          handleContextMenu = {this.handleContextMenu}
+
         />
         <Controls
           onClick = {(direction) => this.handleDirectionClick(direction)}
         />
+        <SelectPipe
+        	handleOptionChange = {this.handleOptionChange}
+        	selectedOption = {this.state.pipe_size}
+        />
         <Reset
           onClick = {() => this.handleReset()}
         />
+        {this.state.selectedOption}
       </div>
       :
       <LoginComponent
