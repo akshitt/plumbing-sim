@@ -9,4 +9,6 @@ class Game(models.Model):
 	size = models.IntegerField(default=10)
 	row = models.IntegerField(default=0)
 	col = models.IntegerField(default=0)
+	initial_pressure = models.IntegerField(default=60)
 	grid = JSONField()
+	pressure = JSONField(default=None)

@@ -69,6 +69,15 @@ class WebSocketService{
     directionClick(game_id,direction,pipe_size){
     	this.sendMessage({command: 'direction_click', game_id: game_id, direction:direction, pipe_size: pipe_size })
     }
+    changeSize(game_id,i,j,pipe_size){
+        this.sendMessage({command: 'change_size', game_id: game_id, i:i, j:j, pipe_size:pipe_size})
+    }
+    deletePipe(game_id,i,j){
+        this.sendMessage({command: 'delete_pipe', game_id: game_id, i:i, j:j})
+    }
+    changePressure(game_id,initial_pressure){
+        this.sendMessage({command: 'change_init_pressure', game_id: game_id, initial_pressure: initial_pressure})
+    }
     addCallbacks(gameCallback){
         this.callbacks['game'] = gameCallback;
     }

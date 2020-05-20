@@ -43,24 +43,81 @@ class LoginComponent extends React.Component {
 
 }
 
-function Block(props){
+class CustomContext extends React.Component{
+ constructor(props) {
+ super(props);
+ 
+ this.state={
+ visible: false,
+ x: 0,
+ y: 0
+ };
+ }
+ 
+ componentDidMount(){
+ var self=this;
+ document.addEventListener('contextmenu', function(event){
+ event.preventDefault();
+ const clickX = event.clientX;
+ const clickY = event.clientY;
+ self.setState({ visible: true, x: clickX, y: clickY });
+ 
+ });
+ document.addEventListener('click', function(event){
+ event.preventDefault();
+ self.setState({ visible: false, x:0, y:0});
+ 
+ });
+ }
+ 
+ returnMenu(items){
+ var myStyle = {
+ 'position': 'absolute',
+ 'top': `${this.state.y}px`,
+ 'left':`${this.state.x+5}px`
+ }
+ 
+ return <div className='custom-context' id='text' style={myStyle}>
+ {items.map((item, index, arr) =>{
+ if(arr.length-1==index){
+ return <div key={index} className='custom-context-item-last'>{item.label}</div>
+ }else{
+ return <div key={index} className='custom-context-item'>{item.label}</div>
+ }
+ })}
+ </div>;
+ }
+   render() {
+    return  (<div id='cmenu'>
+        {this.state.visible ? this.returnMenu(this.props.items): null}
+    </div>
+    )
+  }
+}
+
+class Block extends React.Component{
+  render(){
   return (
-    <button className="square" style={{background:props.color}} onClick={props.onClick} onContextMenu={props.onContextMenu}>
+    <button className="square" style={{background:this.props.color}} onClick={this.props.onClick} onContextMenu={this.props.onContextMenu}>
+    {this.props.pressure}
     </button>
   )
+  }
 }
 
 class Grid extends React.Component{
 
   renderBlock(i,j){
-  	console.log(this.props.grid[i][j])
+  	//console.log(this.props.grid[i][j])
     let color = Colors[this.props.grid[i][j]]
+    let pressure = this.props.pressure[i][j];
     return <Block
       x={i}
       y={j}
       color={color}
       onClick={() => this.props.onClick(i,j)}
       onContextMenu={(e) => this.handleContextMenu(e,i,j)}
+      pressure = {pressure}
     />
   }
 
@@ -187,19 +244,55 @@ class SelectPipe extends React.Component{
 	}
 }
 
+class ChangeInitialPressure extends React.Component{
+  
+  constructor(props) {
+    super(props)
+    this.state = {
+      initial_pressure: ''
+    }
+    this.handleChange = this.handleChange.bind(this)
+  }
+
+  handleChange(e) {
+    this.setState({
+      initial_pressure: e.target.value
+    });
+  }
+
+  render() {
+    return(
+      <form onSubmit={(e) => this.props.handlePressureChange(e,this.state.initial_pressure)}>
+        Enter initial pressure
+        <input type="text" onChange = {this.handleChange} />        
+        <button className="submit" type="submit">
+        Make change
+        </button>
+      </form>
+    )
+  }
+}
+
 class App extends React.Component{
 
   constructor(props) {
     super(props);
     this.handleContextMenu = this.handleContextMenu.bind(this);
+    this.handleSizeChange = this.handleSizeChange.bind(this);
+    this.handleDeletePipe = this.handleDeletePipe.bind(this);
+    this.handlePressureChange = this.handlePressureChange.bind(this);
     let size = 15
     let grid = []
     let row = size-1
     let col = 0
+    let pressure = []
     for(let i=0;i<size;i++){
       let row = Array(size).fill("blank")
+      let prow = Array(size).fill("")
+      pressure.push(prow)
       grid.push(row)
     }
+    pressure[row][col] = "60"
     grid[row][col] = "active"
     this.state = {
       size:size,
@@ -209,8 +302,21 @@ class App extends React.Component{
       game_id: '',
       loggedIn: false,
       pipe_size: 'large',
+      menuX: "100px",
+      menuY: "100px",
+      visible: false,
+      currBlockX: 0,
+      currBlockY: 0,
+      pressure: pressure,
+      initial_pressure: '60'
     };
    
+  }
+  componentDidMount(){
+    var self = this
+    document.addEventListener('click', function(event){
+      self.setState({visible: false});
+    });
   }
     waitForSocketConnection(callback) {
         const component = this;
@@ -272,11 +378,15 @@ class App extends React.Component{
     const row = parsedData['row']
     const col = parsedData['col']
     const size = parsedData['size']
+    const pressure = parsedData['pressure']
+    const initial_pressure = parsedData['initial_pressure']
     this.setState({
     	loggedIn: true,
       grid: grid,
       row: row,
-      col: col
+      col: col,
+      pressure: pressure,
+      initial_pressure: initial_pressure
     })
     
   }
@@ -285,15 +395,50 @@ class App extends React.Component{
     const grid = this.state.grid;
     if(grid[i][j].split("_")[0]=="pipe"){
       e.preventDefault()
+      console.log(e.clientX,e.clientY)
       console.log(i,j)
+      this.setState({
+        menuX: e.clientX,
+        menuY: e.clientY,
+        visible: true,
+        currBlockX: i,
+        currBlockY: j,
+      })
     }
   }
 
+  handleDeletePipe(e) {
+    let game_id = this.state.game_id
+    let i = this.state.currBlockX
+    let j = this.state.currBlockY
+    WebSocketInstance.deletePipe(game_id,i,j)
+  }
+
+  handleSizeChange(event) {
+    let size = event.target.value
+    let game_id = this.state.game_id
+    let i = this.state.currBlockX
+    let j = this.state.currBlockY
+    WebSocketInstance.changeSize(game_id,i,j,size);
+  }
+
+  handlePressureChange(event,val){
+    event.preventDefault()
+    let game_id = this.state.game_id
+    let initial_pressure = +val
+    if(Number.isInteger(initial_pressure)&&initial_pressure>0){
+      WebSocketInstance.changePressure(game_id,initial_pressure)
+    }
+    else{
+      alert('Enter a positive integer')
+    }
+  }
 
   render() {
     const size = this.state.size
     const grid = this.state.grid
     const loggedIn = this.state.loggedIn
+    const pressure = this.state.pressure
     return(
        loggedIn ?
       <div>
@@ -302,7 +447,7 @@ class App extends React.Component{
           grid={grid}
           onClick = {(i,j) => this.handleBlockClick(i,j)}
           handleContextMenu = {this.handleContextMenu}
-
+          pressure = {pressure}
         />
         <Controls
           onClick = {(direction) => this.handleDirectionClick(direction)}
@@ -311,12 +456,32 @@ class App extends React.Component{
         	handleOptionChange = {this.handleOptionChange}
         	selectedOption = {this.state.pipe_size}
         />
+        <ChangeInitialPressure 
+          handlePressureChange = {this.handlePressureChange} />
         <Reset
           onClick = {() => this.handleReset()}
         />
-        {this.state.selectedOption}
+        {this.state.visible &&
+          <div style={{position:"absolute", top:this.state.menuY, left:this.state.menuX}}>
+
+            <button onClick={this.handleDeletePipe} value="del">
+            Delete pipe
+            </button>
+            <button onClick={this.handleSizeChange} value="large">
+            Change to 1 inch
+            </button>
+            <button onClick={this.handleSizeChange} value="medium">
+            Change to 0.75 inch
+            </button>
+            <button onClick={this.handleSizeChange} value="small">
+            Change to 0.5 inch
+            </button>
+            </div>
+        }
+
+
       </div>
-      :
+            :
       <LoginComponent
         handleLogin = {this.handleLogin} />
     )
