@@ -87,9 +87,11 @@ class Grid extends React.Component{
   render(){
     const n = this.props.size;
     return(
+      <center>
       <div>
         {this.renderGrid(n)}
       </div>
+      </center>
     )
   }
 }
@@ -125,6 +127,7 @@ class Controls extends React.Component{
 
   render() {
     return(
+      <center>
       <div>
         <div className="board-row">
           {this.renderBlank()}
@@ -141,10 +144,14 @@ class Controls extends React.Component{
           {this.renderDirection("D")}
           {this.renderBlank()}
         </div>
+
       </div>
+      </center>
     )
   }
 }
+
+
 
 function Reset(props){
   return(
@@ -173,13 +180,13 @@ class SelectPipe extends React.Component{
 	render() {
 		return(
 		<form>
-			<input type="radio" value="small" checked = {this.state.selectedOption=="small"} onChange = {this.handleChange} />
+			<input type="radio" value="small" checked = {this.state.selectedOption==="small"} onChange = {this.handleChange} />
 				0.5 inch
 			
-			<input type="radio" value="medium" checked = {this.state.selectedOption=="medium"} onChange = {this.handleChange} />
+			<input type="radio" value="medium" checked = {this.state.selectedOption==="medium"} onChange = {this.handleChange} />
 				0.75 inch
 		
-			<input type="radio" value="large" checked = {this.state.selectedOption=="large"} onChange = {this.handleChange} />
+			<input type="radio" value="large" checked = {this.state.selectedOption==="large"} onChange = {this.handleChange} />
 				1 inch
 			
 		</form>
@@ -209,6 +216,7 @@ class App extends React.Component{
       game_id: '',
       loggedIn: false,
       pipe_size: 'large',
+      cost:0,
     };
    
   }
@@ -231,7 +239,8 @@ class App extends React.Component{
   handleDirectionClick(direction) {
     let game_id = this.state.game_id
     let pipe_size = this.state.pipe_size
-    WebSocketInstance.directionClick(game_id,direction,pipe_size)
+    let cost = this.state.cost
+    WebSocketInstance.directionClick(game_id,direction,pipe_size,cost)
   }
 
   handleBlockClick(i,j){
@@ -272,18 +281,20 @@ class App extends React.Component{
     const row = parsedData['row']
     const col = parsedData['col']
     const size = parsedData['size']
+    const cost = parsedData['cost']
     this.setState({
     	loggedIn: true,
       grid: grid,
       row: row,
-      col: col
+      col: col,
+      cost: cost,
     })
     
   }
 
   handleContextMenu(e,i,j){
     const grid = this.state.grid;
-    if(grid[i][j].split("_")[0]=="pipe"){
+    if(grid[i][j].split("_")[0]==="pipe"){
       e.preventDefault()
       console.log(i,j)
     }
@@ -296,7 +307,7 @@ class App extends React.Component{
     const loggedIn = this.state.loggedIn
     return(
        loggedIn ?
-      <div>
+      <div> 
         <Grid 
           size={size}
           grid={grid}

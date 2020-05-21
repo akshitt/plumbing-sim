@@ -34,13 +34,14 @@ class MyConsumer(AsyncWebsocketConsumer):
 				for j in range(size):
 					row.append('blank')
 				grid.append(row)
+			cost = 0
 			row = size-1
 			col = 0
 			grid[row][col] = 'active'
 			json_grid = json.dumps(grid)
 			game = Game(game_id=game_id,size=size,row=row,col=col,grid=json_grid)
 			await self.save(game)
-			await self.sendMessage(grid,size,row,col)
+			await self.sendMessage(grid,size,row,col,cost)
 		
 	async def reset(self,data):
 		game_id = data['game_id']
@@ -53,6 +54,7 @@ class MyConsumer(AsyncWebsocketConsumer):
 			grid.append(row)
 		row = size-1
 		col = 0
+		cost = 0 
 		grid[row][col] = 'active'
 		json_grid = json.dumps(grid)
 		game =  await self.get_game(game_id)
@@ -60,7 +62,7 @@ class MyConsumer(AsyncWebsocketConsumer):
 		game.row = row
 		game.col = col
 		await self.save(game)
-		await self.sendMessage(grid,size,row,col)
+		await self.sendMessage(grid,size,row,col,cost)
 
 	async def block_click(self,data):
 		game_id = data['game_id']
@@ -117,6 +119,7 @@ class MyConsumer(AsyncWebsocketConsumer):
 		row = game.row
 		col = game.col
 		size = game.size
+		cost = game.cost
 		grid = json.loads(game.grid)
 		currIndex = (row,col)
 		idx1 = None
@@ -155,18 +158,27 @@ class MyConsumer(AsyncWebsocketConsumer):
 			game.row = row 
 			game.col = col
 			game.grid = json.dumps(grid)
+			
+			if pipe_size=="large":
+				cost += 50*0.9
+			elif pipe_size=="medium":
+				cost += 30*0.67
+			elif pipe_size=="small":
+				cost += 15*0.57
+			print(cost)
 			await self.save(game)
-			await self.sendMessage(grid,size,row,col)
+			await self.sendMessage(grid,size,row,col,cost)
 
 
 
-	async def sendMessage(self,grid,size,row,col):
+	async def sendMessage(self,grid,size,row,col,cost):
 		content = {
 			'command' : 'game',
 			'grid' : grid,
 			'size' : size,
 			'row' : row,
-			'col' : col
+			'col' : col,
+			'cost': cost
 		}
 		await self.send(text_data=json.dumps(content))
 

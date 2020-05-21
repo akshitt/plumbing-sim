@@ -9,4 +9,5 @@ class Game(models.Model):
 	size = models.IntegerField(default=10)
 	row = models.IntegerField(default=0)
 	col = models.IntegerField(default=0)
+	cost = models.IntegerField(default=0)
 	grid = JSONField()

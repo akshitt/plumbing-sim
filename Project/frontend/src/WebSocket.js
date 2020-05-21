@@ -66,8 +66,8 @@ class WebSocketService{
     	this.sendMessage({command: 'block_click', game_id: game_id, i:i, j:j})
     }
 
-    directionClick(game_id,direction,pipe_size){
-    	this.sendMessage({command: 'direction_click', game_id: game_id, direction:direction, pipe_size: pipe_size })
+    directionClick(game_id,direction,pipe_size,cost){
+    	this.sendMessage({command: 'direction_click', game_id: game_id, direction:direction, pipe_size: pipe_size, cost:cost })
     }
     addCallbacks(gameCallback){
         this.callbacks['game'] = gameCallback;
