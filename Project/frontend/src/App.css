@@ -1,46 +1,287 @@
 .square {
   background: #fff;
-  border: 1px solid #999;
+  border: 0px solid #999;
   float: left;
-  font-size: 24px;
+  font-size: 3vw;
   font-weight: bold;
-  line-height: 34px;
-  height: 34px;
-  margin-right: -1px;
-  margin-top: -1px;
   padding: 0;
   text-align: center;
-  width: 34px;
+  height: 4.54545454%;
+  width: 4.54545454%;
   color: #fff;
 }
 
-.board-row:after {
-  clear: both;
-  content: "";
-  display: table;
+input[type=text]{
+  
+}
+.rowC{
+  display:flex; flex-direction:row;
+  background-color: #efeff5; 
+  padding: 10px;
+  width: 80vw;
+  height: 50vw;
+  border: 3px solid black;
+  margin-left: 1vw;
 }
 
 .direction {
-  background: #fff;
-  border: 1px solid #999;
-  font-size: 24px;
-  height: 50px;
-  width: 50px;
+  margin:0;
+  padding:0;
+  font-size: 0;
+  height: 33.33%;
+  width: 33.33%;
   font-weight: bold;
+  float:left;
+  background-color: gray;
+
+}
+.up{
+  width:0;
+  height:0;
+  border-left: 2.5vw solid transparent;
+  border-right: 2.5vw solid transparent;
+  border-bottom: 2.5vw solid black;
 }
 
 .blank {
-  background: #fff;
-  border: 0px;
-  height: 50px;
-  width: 50px;
+  height: 33.33%;
+  width: 33.33%;
+  padding:0;
+  margin:0;
+  float:left;
 }
 
 .reset {
-  background: #fff;
+  
   border: 1px solid #999;
-  font-size: 40px;
-  height: 50px;
-  width: 130px;
-  font-weight: bold;
+  font-size: 1.7vw;
+  height: 2vw;
+  width: 5vw;
+  font-family: 'Trocchi', serif;
+}
+
+
+.lhs{
+  width: 30vw;
+  height:50vw;
+  display:block;
+  padding-left: 5px;
+  margin: auto;
+  font-size: 1.7vw;
+  font-family: 'Trocchi', serif;
+  float: left;
+  border: 2px solid black;
+}
+
+.title1{
+  width:100%;
+  height: 5%;
+  
+}
+
+.controls{
+  padding-top: 0.5vw;
+  width: 100%;
+  height: 20%;
+  display: flex;
+  flex-direction: row;
+  
+ 
+}
+.controls-lhs{
+  width: 50%;
+  height: 100%;
+  display: flex;
+  
+  align-items: center;
+}
+.controls-rhs{
+  width: 50%;
+  height: 100%;
+  display: flex;
+  
+  align-items: center;
+}
+.size{
+  width: 100%;
+  height: 20%;
+  display: flex;
+  flex-direction: row;
+  
+}
+.size-lhs{
+  display: flex;
+  
+  align-items: center;
+  width: 50%;
+  height: 100%;
+}
+.size-rhs{
+  display: flex;
+  
+  align-items: center;
+  width: 50%;
+  height: 100%;
+}
+.resetdiv{
+  width: 100%;
+  height: 12.5%;
+  display: flex;
+  flex-direction: row;
+  
+  
+}
+.resetdiv-lhs{
+  display: flex;
+  
+  align-items: center;
+  width: 50%;
+  height: 100%;
+}
+.resetdiv-rhs{
+  display: flex;
+  
+  align-items: center;
+  width: 50%;
+  height: 100%;
+}
+.init-pressure{
+  width:100%;
+  height: 12.5%;
+  display: flex;
+  flex-direction: row;
+  
+
+}
+
+.init-pressure-lhs{
+  display: flex;
+  
+  align-items: center;
+  width: 50%;
+  height: 100%;
+}
+.init-pressure-rhs{
+  display: flex;
+  
+  align-items: center;
+  width: 50%;
+  height: 100%;
+  
+}
+.submit{
+  font-size: min(1.7vw,20px);
+  font-family: 'Trocchi', serif;
+}
+.budget, .money-rem, .money-spent{
+
+  width:100%;
+  height:10%;
+  display:flex;
+  flex-direction: row;
+  
+  
+  align-items: center;
+}
+.money-rem{
+  border:0px;
+}
+.budget-lhs, .money-rem-lhs, .money-spent-lhs{
+  display: flex;
+  
+  align-items: center;
+  width:50%;
+  height:100%;
+}
+.budget-rhs, .money-spent-rhs, .money-rem-rhs{
+  display: flex;
+  
+  align-items: center;
+  width:50%;
+  height:100%;
+  
+}
+
+
+.menu{
+
+  }
+
+.menu-buttons{
+  width: 100%;
+}
+/* Style inputs */
+label {
+  width: 100%;
+  height: 30%;
+  display: block;
+  border: 0px solid #ccc;
+  vertical-align: middle;
+
+}
+
+
+.gridc{
+  width:7vw;
+  height:7vw;
+  
+  border: 2px solid black;
+  float: left;
+
+}
+
+
+.gridx{
+  width: 50vw;
+  height: 50vw;
+  margin: auto;
+  border: 2px solid black;
+}
+
+.login{
+  width:100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  
+  flex-direction: column;
+  background-color: lightgray;
+  
+}
+
+.login-form{
+  border: 2px solid black;
+  width: 30%;
+  background-color: white;
+}
+
+.login-input{
+  width:100%;
+  height: 2vw;
+}
+
+.login-comp{
+  padding: 1vw;
+  font-size: min(2vw,25px);
+}
+.size-options{
+  text-indent: 1vw;
+}
+.login-submit{
+  display: flex;
+  justify-content: center;
+  padding: 1vw;
+}
+.login-submit-button{
+  font-size: min(2vw,25px);
+  width:100%;
+}
+.login-title{
+   font-family: 'BebasNeueRegular';
+   font-weight: bold;
+   font-size: 5vw;
+}
+.pressure-input{
+  max-width: 5vw;
+  height: 1.5vw;
 }

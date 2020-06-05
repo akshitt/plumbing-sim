@@ -12,3 +12,5 @@ class Game(models.Model):
 	initial_pressure = models.IntegerField(default=60)
 	grid = JSONField()
 	pressure = JSONField(default=None)
+	cost = models.IntegerField(default=0)
+	budget = models.IntegerField(default=0)

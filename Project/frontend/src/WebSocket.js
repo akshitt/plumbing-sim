@@ -54,8 +54,9 @@ class WebSocketService{
         }
     }
 
-    initUser(game_id){
-    	this.sendMessage({command : 'init', game_id : game_id})
+    initUser(game_id,budget,grid_size){
+        console.log(budget)
+    	this.sendMessage({command : 'init', game_id : game_id, budget: budget, grid_size: grid_size})
     }
 
     reset(game_id){
