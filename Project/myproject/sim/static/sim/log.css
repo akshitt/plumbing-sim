@@ -1,0 +1,22 @@
+.log{
+	background-color: lightgray;
+	
+}
+
+.title{
+	font-family: 'BebasNeueRegular';
+   font-weight: bold;
+   font-size: 5vw;
+
+}
+
+.logform{
+	padding-top: 2.5vw;
+	font-size: min(2.7vw,30px);
+	
+}
+
+.recent{
+	
+	font-size: min(2.7vw,30px);
+}

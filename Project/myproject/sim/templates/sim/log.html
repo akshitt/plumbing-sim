@@ -1,0 +1,35 @@
+<html>
+
+<head>
+	{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'sim/log.css' %}">
+</head>
+
+
+<body class="log">
+<div class="title">Logfiles</div>
+<div class ="logform">
+<form action="log" method="post">
+	{% csrf_token %}
+	<div class="search">
+		<label for="{{ form.sim_id.id_for_label }}">Search by ID:</label>
+		{{ form.sim_id }}
+	<input type="submit" value="Go">
+	</div>
+</form>
+</div>
+
+
+<div class="recent">
+Recent Simulations:
+{% if today_filter %}
+	<ul>
+		{% for id in today_filter %}
+		<li><a href="/sim/log/{{ id }}">{{ id }}</a></li>
+		{% endfor %}
+	</ul>
+{% else %}
+	<p>No logs today</p>
+{% endif %}
+</body>
+</html>

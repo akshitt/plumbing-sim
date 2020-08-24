@@ -15,8 +15,9 @@ class WebSocketService{
         this.socketRef = null;
     }
 
-    connect(){
-        const path = config.API_PATH;
+    connect(game_id){
+        const path = config.API_PATH + '/' + game_id;
+
         this.socketRef = new WebSocket(path);
         
         this.socketRef.onmessage = e => {
@@ -41,6 +42,7 @@ class WebSocketService{
     socketNewMessage(data){
         const parsedData = JSON.parse(data);
         const command = parsedData.command;
+        console.log('hey')
         if(Object.keys(this.callbacks).length === 0){
             return;
         }
@@ -48,45 +50,56 @@ class WebSocketService{
         	console.log('game received')
             this.callbacks[command](parsedData);
         }
-        if(command === 'new_message'){
+        else if(command === 'chat'){
             console.log("okay so this was called")
-            this.callbacks[command](parsedData.message);
+            this.callbacks[command](parsedData);
         }
     }
 
-    initUser(game_id,budget,grid_size){
-        console.log(budget)
-    	this.sendMessage({command : 'init', game_id : game_id, budget: budget, grid_size: grid_size})
+    initUser(game_id,budget,grid_size,user_id){
+        console.log(user_id)
+    	this.sendMessage({command : 'init', game_id : game_id, budget: budget, grid_size: grid_size, user_id: user_id})
     }
 
-    reset(game_id){
-    	this.sendMessage({command: 'reset', game_id: game_id})
+    reset(game_id,board){
+    	this.sendMessage({command: 'reset', game_id: game_id, board: board})
     }
 
-    blockClick(game_id,i,j){
-    	this.sendMessage({command: 'block_click', game_id: game_id, i:i, j:j})
+    blockClick(game_id,i,j,board){
+    	this.sendMessage({command: 'block_click', game_id: game_id, i:i, j:j,board: board})
     }
 
-    directionClick(game_id,direction,pipe_size){
-    	this.sendMessage({command: 'direction_click', game_id: game_id, direction:direction, pipe_size: pipe_size })
+    directionClick(game_id,direction,pipe_size,board){
+    	this.sendMessage({command: 'direction_click', game_id: game_id, direction:direction, pipe_size: pipe_size, board: board })
     }
-    changeSize(game_id,i,j,pipe_size){
-        this.sendMessage({command: 'change_size', game_id: game_id, i:i, j:j, pipe_size:pipe_size})
+    changeSize(game_id,i,j,pipe_size,board){
+        this.sendMessage({command: 'change_size', game_id: game_id, i:i, j:j, pipe_size:pipe_size, board: board})
     }
-    deletePipe(game_id,i,j){
-        this.sendMessage({command: 'delete_pipe', game_id: game_id, i:i, j:j})
+    deletePipe(game_id,i,j,board){
+        this.sendMessage({command: 'delete_pipe', game_id: game_id, i:i, j:j, board: board})
     }
-    changePressure(game_id,initial_pressure){
-        this.sendMessage({command: 'change_init_pressure', game_id: game_id, initial_pressure: initial_pressure})
+    changePressure(game_id,initial_pressure,board){
+        this.sendMessage({command: 'change_init_pressure', game_id: game_id, initial_pressure: initial_pressure, board:board})
     }
-    addCallbacks(gameCallback){
+    pipe_click(game_id,i,j,board){
+        this.sendMessage({command: 'pipe_click', game_id: game_id, i:i,j:j, board: board})
+    }
+    switch(game_id,board){
+        this.sendMessage({command: 'switch', game_id: game_id, board: board})
+    } 
+    newChatMessage(game_id,user_id,message){
+        this.sendMessage({command: 'new_message', game_id: game_id, user_id: user_id, message:message})
+    }
+    addCallbacks(gameCallback,chatCallback){
         this.callbacks['game'] = gameCallback;
+        this.callbacks['chat'] = chatCallback;
     }
 
     sendMessage(data){
         try{
         	console.log('tried');
             console.log({...data})
+            console.log(data)
             this.socketRef.send(JSON.stringify({...data}))
         }
         catch(err){

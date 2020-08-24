@@ -9,27 +9,53 @@
   height: 4.54545454%;
   width: 4.54545454%;
   color: #fff;
+  
+
 }
 
 input[type=text]{
   
 }
+
+.container{
+  border: 3px solid black;
+  width: 75vw;
+  height: 55vw;
+}
+
+.links{
+  font-size: 2vw;
+}
+
+.switch{
+  display: flex;
+  flex-direction: row;
+  height:2vw;
+}
+
 .rowC{
   display:flex; flex-direction:row;
   background-color: #efeff5; 
-  padding: 10px;
-  width: 80vw;
+  padding: 00px;
+  width: 100vw;
   height: 50vw;
   border: 3px solid black;
-  margin-left: 1vw;
+  margin-left: 0vw;
+}
+
+.gridx{
+  width: 75vw;
+  height: 50vw;
+  margin: auto;
+  border: 2px solid black;
 }
 
 .direction {
   margin:0;
   padding:0;
   font-size: 0;
-  height: 33.33%;
-  width: 33.33%;
+  height: 33.33333333333%;
+  width: 33.33333333333%;
   font-weight: bold;
   float:left;
   background-color: gray;
@@ -44,25 +70,56 @@ input[type=text]{
 }
 
 .blank {
-  height: 33.33%;
-  width: 33.33%;
-  padding:0;
   margin:0;
+  padding:0;
+  font-size: 0;
+  height: 33.33333333333%;
+  width: 33.33333333333%;
+  font-weight: bold;
   float:left;
+  background-color: gray;
+  opacity: 0.15;
 }
 
 .reset {
   
   border: 1px solid #999;
-  font-size: 1.7vw;
-  height: 2vw;
-  width: 5vw;
+  font-size: min(1.7vw,20px);
+  height: 20%;
+  width: 40%;
   font-family: 'Trocchi', serif;
 }
 
+.submit{
+    font-size: 1.5vw;
+  font-family: 'Trocchi', serif;
+  width: 45%;
+  height: 60%;
+text-indent: 0vw;
+  padding: 0;
+}
+.pressure-input{
+  padding: 0;
+  height: 50%;
+  width: 50%;
+}
+.submit1{
+  font-size: 100%;
+  font-family: 'Trocchi', serif;
+  width: 43%;
+text-indent: -.5vw;
+}
+.pdisplay{
+  border: 0px solid black;
+  display: flex;
+  flex-direction: row;
+  height: 4vw;
+  width: 100%;
+  max-width: 200px;
+}
 
 .lhs{
-  width: 30vw;
+  width: 25vw;
   height:50vw;
   display:block;
   padding-left: 5px;
@@ -107,7 +164,7 @@ input[type=text]{
   height: 20%;
   display: flex;
   flex-direction: row;
-  
+  border-bottom: 1px solid black;
 }
 .size-lhs{
   display: flex;
@@ -118,8 +175,8 @@ input[type=text]{
 }
 .size-rhs{
   display: flex;
+  flex-direction: column;
   
-  align-items: center;
   width: 50%;
   height: 100%;
 }
@@ -163,16 +220,13 @@ input[type=text]{
 }
 .init-pressure-rhs{
   display: flex;
-  
+  flex-direction: row;
   align-items: center;
   width: 50%;
   height: 100%;
   
 }
-.submit{
-  font-size: min(1.7vw,20px);
-  font-family: 'Trocchi', serif;
-}
+
 .budget, .money-rem, .money-spent{
 
   width:100%;
@@ -183,8 +237,9 @@ input[type=text]{
   
   align-items: center;
 }
-.money-rem{
-  border:0px;
+.budget, .money-rem{
+  border-bottom: 1px solid black;
+  border-bottom: 1px solid black;
 }
 .budget-lhs, .money-rem-lhs, .money-spent-lhs{
   display: flex;
@@ -204,7 +259,8 @@ input[type=text]{
 
 
 .menu{
-
+  width: 12vw;
+  height: 10vw;
   }
 
 .menu-buttons{
@@ -231,12 +287,7 @@ label {
 }
 
 
-.gridx{
-  width: 50vw;
-  height: 50vw;
-  margin: auto;
-  border: 2px solid black;
-}
+
 
 .login{
   width:100vw;
@@ -264,6 +315,11 @@ label {
   padding: 1vw;
   font-size: min(2vw,25px);
 }
+.login-inputbox{
+  display: flex;
+  justify-content: center;
+  padding: 0vw;
+}
 .size-options{
   text-indent: 1vw;
 }
@@ -281,7 +337,110 @@ label {
    font-weight: bold;
    font-size: 5vw;
 }
-.pressure-input{
-  max-width: 5vw;
-  height: 1.5vw;
+
+
+input[type=radio]{
+  display: table-cell;
+  height: 1.8vw;
+  vertical-align: middle;
+  margin-bottom: 0.6vw;
+}
+
+label {
+  display: table-cell;
+  height: 2vw;
+  vertical-align: middle;
+  margin-top: 0vw;
+}
+
+.inputdiv{
+  display: flex;
+  flex-direction: row;
+  padding-top: 0.5vw;
+  border: 0px solid black;
+  height: 3vw;
+}
+
+.log{
+  border: 0px solid black;
+  position: absolute;
+  bottom: 0px;
+  font-size: 2.5vw;
+}
+
+
+.sidebar {
+  position: absolute;
+  top: 0px;
+  right: -300px;
+  height: 100%;
+  width: 300px;
+  transition: left .3s ease-in-out;
+  background-color: gray;
+}
+.sidebar-toggle {
+  position: absolute;
+  top: 20%;
+  left: -60px;
+  height: 60px;
+  width: 60px;
+  z-index: 1;
+}
+.sidebar.open {
+
+    right: 0;
+    padding-right:0.5vw;
+    padding-left: -100vw;
+
+}
+.content.open {
+    left: 300px;
+}
+
+ul{
+  list-style-type: none;
+    padding:0;
+}
+
+.replies {
+    background: #f5f5f5;
+    list-style-type: none;
+    padding:0;
+    padding-right: 0vw;
+
+}
+  .sent {
+    background: #435f7a;
+    color: #f5f5f5;
+    text-align:right;
+    margin-right: 0vw;
+    list-style-type: none;
+    padding:0;
+  }
+
+.message-input{
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  flex-direction: row;
+
+}
+.wrap{
+  display: flex;
+  flex-direction: row;
+}
+.message-sender{
+  background-color: black;
+  color:white;
+}
+
+.messages{
+
+  max-height: 95%;
+  overflow-y: scroll;
+}
+
+.emptydiv{
+  width:100%;
+  height: 12.5%;
 }

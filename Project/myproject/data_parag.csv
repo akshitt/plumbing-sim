@@ -1,0 +1,38 @@
+id,sim_id,action,location,info,money_spent,money_left,timestamp
+204,parag,Login,"","{""Budget"": ""3243"", ""Grid Size"": ""Medium""}",0,3243,2020-06-28 11:58:08.124827+00
+205,parag,Clicked on Pipe Direction Button,"(21,0)","{""Diameter"": ""1 inch"", ""Direction"": ""Right""}",0,3243,2020-06-28 11:58:09.394491+00
+206,parag,Added Pipe,"(21,0) - (21,3)","{""Diameter"": ""1 inch"", ""Direction"": ""Right"", ""End Pressure"": 59, ""Start Pressure"": 60}",45,3198,2020-06-28 11:58:09.406369+00
+207,parag,Clicked on Pipe Direction Button,"(21,3)","{""Diameter"": ""1 inch"", ""Direction"": ""Right""}",45,3198,2020-06-28 11:58:09.528843+00
+208,parag,Added Pipe,"(21,3) - (21,6)","{""Diameter"": ""1 inch"", ""Direction"": ""Right"", ""End Pressure"": 58, ""Start Pressure"": 59}",90,3153,2020-06-28 11:58:09.539109+00
+209,parag,Clicked on Pipe Direction Button,"(21,6)","{""Diameter"": ""1 inch"", ""Direction"": ""Up""}",90,3153,2020-06-28 11:58:09.830397+00
+210,parag,Clicked on Pipe Direction Button,"(21,6)","{""Diameter"": ""1 inch"", ""Direction"": ""Up""}",90,3153,2020-06-28 11:58:09.986744+00
+211,parag,Clicked on Pipe Direction Button,"(21,6)","{""Diameter"": ""1 inch"", ""Direction"": ""Right""}",90,3153,2020-06-28 11:58:10.652143+00
+212,parag,Added Pipe,"(21,6) - (21,9)","{""Diameter"": ""1 inch"", ""Direction"": ""Right"", ""End Pressure"": 57, ""Start Pressure"": 58}",135,3108,2020-06-28 11:58:10.673418+00
+213,parag,Clicked on Pipe Direction Button,"(21,9)","{""Diameter"": ""1 inch"", ""Direction"": ""Up""}",135,3108,2020-06-28 11:58:10.955876+00
+214,parag,Added Pipe Junction,"(21,9)",{},235,3008,2020-06-28 11:58:10.977256+00
+215,parag,Added Pipe,"(21,9) - (18,9)","{""Diameter"": ""1 inch"", ""Direction"": ""Up"", ""End Pressure"": 56, ""Start Pressure"": 57}",280,2963,2020-06-28 11:58:10.989729+00
+216,parag,Clicked on Pipe Direction Button,"(18,9)","{""Diameter"": ""1 inch"", ""Direction"": ""Up""}",280,2963,2020-06-28 11:58:11.162718+00
+217,parag,Added Pipe,"(18,9) - (15,9)","{""Diameter"": ""1 inch"", ""Direction"": ""Up"", ""End Pressure"": 55, ""Start Pressure"": 56}",325,2918,2020-06-28 11:58:11.189682+00
+218,parag,Clicked on Pipe Direction Button,"(15,9)","{""Diameter"": ""1 inch"", ""Direction"": ""Up""}",325,2918,2020-06-28 11:58:11.306555+00
+219,parag,Added Pipe,"(15,9) - (12,9)","{""Diameter"": ""1 inch"", ""Direction"": ""Up"", ""End Pressure"": 54, ""Start Pressure"": 55}",370,2873,2020-06-28 11:58:11.318431+00
+220,parag,Clicked on Pipe Direction Button,"(12,9)","{""Diameter"": ""1 inch"", ""Direction"": ""Right""}",370,2873,2020-06-28 11:58:12.786973+00
+221,parag,Added Pipe Junction,"(12,9)",{},470,2773,2020-06-28 11:58:12.807936+00
+222,parag,Added Pipe,"(12,9) - (12,12)","{""Diameter"": ""1 inch"", ""Direction"": ""Right"", ""End Pressure"": 53, ""Start Pressure"": 54}",515,2728,2020-06-28 11:58:12.825124+00
+223,parag,Clicked on Pipe,"(15,9) - (18,9)","{""Diameter"": ""1 inch"", ""Direction"": ""Up"", ""End Pressure"": 55, ""Start Pressure"": 56}",515,2728,2020-06-28 11:58:13.779921+00
+224,parag,Changed Pipe Diameter,"(15,9) - (18,9)","{""Direction"": ""Up"", ""End Pressure"": 44, ""Final Diameter"": ""0.5 inch"", ""Start Pressure"": 56, ""Initial Diameter"": ""1 inch""}",498,2745,2020-06-28 11:58:14.976526+00
+225,parag,Clicked on Pipe,"(21,3) - (21,6)","{""Diameter"": ""1 inch"", ""Direction"": ""Right"", ""End Pressure"": 58, ""Start Pressure"": 59}",498,2745,2020-06-28 11:58:16.026535+00
+226,parag,Delete Pipe,"(21,6) - (21,3)","{""Diameter"": ""1 inch"", ""Direction"": ""Right"", ""Active Pressure"": 59, ""Delete from middle"": ""Yes""}",453,2790,2020-06-28 11:58:16.812979+00
+227,parag,Click on joint,"(15,9)",{},453,2790,2020-06-28 11:58:17.813761+00
+228,parag,Clicked on Pipe Direction Button,"(15,9)","{""Diameter"": ""1 inch"", ""Direction"": ""Left""}",453,2790,2020-06-28 11:58:19.115383+00
+229,parag,Added Pipe Junction,"(15,9)",{},553,2690,2020-06-28 11:58:19.142169+00
+230,parag,Added Pipe,"(15,9) - (15,6)","{""Diameter"": ""1 inch"", ""Direction"": ""Left""}",598,2645,2020-06-28 11:58:19.168403+00
+231,parag,Clicked on Pipe Direction Button,"(15,6)","{""Diameter"": ""1 inch"", ""Direction"": ""Left""}",598,2645,2020-06-28 11:58:19.240583+00
+232,parag,Added Pipe,"(15,6) - (15,3)","{""Diameter"": ""1 inch"", ""Direction"": ""Left""}",643,2600,2020-06-28 11:58:19.251901+00
+233,parag,Clicked on Pipe Direction Button,"(15,3)","{""Diameter"": ""1 inch"", ""Direction"": ""Down""}",643,2600,2020-06-28 11:58:21.826122+00
+234,parag,Added Pipe Junction,"(15,3)",{},743,2500,2020-06-28 11:58:21.850399+00
+235,parag,Added Pipe,"(15,3) - (18,3)","{""Diameter"": ""1 inch"", ""Direction"": ""Down""}",788,2455,2020-06-28 11:58:21.877026+00
+236,parag,Clicked on Pipe Direction Button,"(18,3)","{""Diameter"": ""1 inch"", ""Direction"": ""Down""}",788,2455,2020-06-28 11:58:21.953214+00
+237,parag,Added Pipe Junction,"(18,3)","{""Diameter"": ""1 inch"", ""Direction"": ""Down""}",888,2355,2020-06-28 11:58:21.963321+00
+238,parag,Added Pipe,"(18,3) - (21,3)","{""Diameter"": ""1 inch"", ""Direction"": ""Down"", ""End Pressure"": 59, ""Start Pressure"": 58}",933,2310,2020-06-28 11:58:21.972313+00
+239,parag,Clicked on Pipe Direction Button,"(21,3)","{""Diameter"": ""1 inch"", ""Direction"": ""Down""}",933,2310,2020-06-28 11:58:22.202974+00
+240,parag,Reset,"",{},0,3243,2020-06-28 11:58:36.669366+00

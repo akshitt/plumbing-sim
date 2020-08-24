@@ -3,9 +3,10 @@ from channels.routing import ProtocolTypeRouter, URLRouter
 from django.urls import re_path
 from sim import consumers
 from django.conf.urls import url
+from django.urls import path
 
 websocket_urlpatterns = [
-    url(r'ws/sim$', consumers.MyConsumer),
+    path('ws/sim/<str:id>', consumers.MyConsumer),
 ]
 
 application = ProtocolTypeRouter({
